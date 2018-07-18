@@ -1,6 +1,5 @@
 val PATTERN_ALL = """([0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])\s(\d{2}:\d{2}:\d{2}))(.*)\s(INFO|ERROR|WARN|TRACE|DEBUG|FATAL)\s\[(.*?)\]\s(.*\..*?:)\s(.*:{0,1})""".r
-val PATTERN_APACHE = """\[?(.*?)\s(.*)\s([0-9][1-9])\s(\d{2}:\d{2}:\d{2})\s\d{4}\]?\s\[(.*)\]\s(.*?)\s(.*)""".r
-val PATTERN_APACHE_WORK_WELL = """(\[(.*?)\s(.*)\s[0-9][1-9]\s(\d{2}:\d{2}:\d{2})\s\d{4}\])(\s\[(.*?)\]\s)(.*)""".r
+val PATTERN_APACHE = """(\[(.*?)\s(.*)\s[0-9][1-9]\s(\d{2}:\d{2}:\d{2})\s\d{4}\])(\s\[(.*?)\]\s)(.*)""".r
 val PATTERN_BGL = """((-|\w*)\s\d*)\s(\d{4}.\d{2}.\d{2})(\s\w*-)*(.*?)\s(\d{4}.\d{2}.\d{2}.\d{2}.\d{2}.\d{2}.\d{6})\s(.*)\s(INFO|ERROR|WARNING|TRACE|DEBUG|FATAL)\s(.*)""".r
 val PATTERN_HDFS = """(\d*\s)*(INFO|ERROR|WARN|WARNING|TRACE|DEBUG|FATAL|SEVERE)\s(.*)""".r
 val PATTERN_OPENSTACK = """((\d{4}[^a-zA-Z]*)\s\d*)\s(INFO|ERROR|WARN|WARNING|TRACE|DEBUG|FATAL|SEVERE)\s(.*)""".r
@@ -13,7 +12,7 @@ case class LogRecord(system: String, timestamp: String, SeverityLevel: String, m
 
 def parseLogLine(log: String): LogRecord = {
 //	val result = PATTERN_ALL.findFirstMatchIn(log)
-//	val result2 = PATTERN_APACHE_WORK_WELL.findFirstMatchIn(log)
+//	val result2 = PATTERN_APACHE.findFirstMatchIn(log)
 //	val result3 = PATTERN_BGL.findFirstMatchIn(log)
 //	val result4 = PATTERN_HDFS.findFirstMatchIn(log)
 //	val result5 = PATTERN_OPENSTACK.findFirstMatchIn(log)
