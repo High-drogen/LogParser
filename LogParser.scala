@@ -27,17 +27,16 @@ def parseLogLine(log: String): LogRecord = {
 //    }
 //    else {
 //        val m = result.get
-//		LogRecord( m.group(7), m.group(1), m.group(6), m.group(8)+""+m.group(9))
+//		  LogRecord( "Hadoop", m.group(1), m.group(6), m.group(8)+""+m.group(9))
 //    }
-	
+
 //    if (result2.isEmpty) {
 //        println("Rejected Log Line: " + log)
 //        LogRecord("Empty2", "-", "-", "")
 //    }
 //    else {
 //		val n = result2.get
-//		LogRecord( "N/A", n.group(1), n.group(6), n.group(7) )
-	//	matchesTest.foreach(println)		
+//		LogRecord( "Apache", n.group(1), n.group(6), n.group(7) )
 //    }
 
 //	if (result3.isEmpty) {
