@@ -10,7 +10,9 @@ val PATTERN_ANDROID = """(\d{2}[^a-zA-Z]*)\s(I|E|W|T|D|F|S|V)\s(.*)""".r
 
 case class LogRecord(system: String, timestamp: String, SeverityLevel: String, message: String)
 
-def parseLogLine(log: String): LogRecord = {
+def parseLogLine(log: String, pattern: String = "DEFAULT_PATTERN"): LogRecord = {
+	
+//  val result = pattern.findFirstMatchIn(log)
 //	val result = PATTERN_ALL.findFirstMatchIn(log)
 //	val result2 = PATTERN_APACHE.findFirstMatchIn(log)
 //	val result3 = PATTERN_BGL.findFirstMatchIn(log)
@@ -92,7 +94,7 @@ def parseLogLine(log: String): LogRecord = {
 //		val m = result8.get
 //		LogRecord( "Zookeeper", m.group(1), m.group(2), m.group(4))
 //	}
-	
+
 	if (result9.isEmpty) {
 		println("Rejected Log Line: " + log)
 		LogRecord("Empty2", "-", "-", "")
@@ -112,6 +114,11 @@ def parseLogLine(log: String): LogRecord = {
 //val accessLogs = sc.textFile("/Users/vaati/Desktop/loghub/Spark/Spark_2k.log").map(parseLogLine).toDF()
 //val accessLogs = sc.textFile("/Users/vaati/Desktop/loghub/Windows/Windows_2k.log").map(parseLogLine).toDF()
 //val accessLogs = sc.textFile("/Users/vaati/Desktop/loghub/Zookeeper/Zookeeper_2k.log").map(parseLogLine).toDF()
+
+
+//val truc = sc.textFile("/Users/vaati/Desktop/loghub/Andriod/Andriod_2k.log")
+//val parseLogLiner = parseLogLine(truc.toString)("PATTERN_ANDROID")
+
 val accessLogs = sc.textFile("/Users/vaati/Desktop/loghub/Andriod/Andriod_2k.log").map(parseLogLine).toDF()
 
 accessLogs.show()
