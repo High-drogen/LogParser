@@ -1,4 +1,5 @@
 import scala.util.matching.Regex
+import org.apache.spark.sql.SQLContext
 
 // ----- THIS WILL BE CONTAINED IN AN EXTERNAL FILE -----------------------------------------------------------------------------
 
@@ -12,6 +13,8 @@ val PATTERN_SPARK = """(\d{2}[^a-zA-Z]*)\s(INFO|ERROR|WARN|WARNING|TRACE|DEBUG|F
 val PATTERN_WINDOWS = """(\d{4}[^a-zA-Z]*)\s(Info|Error|Warn|Warning|Trace|Debug|Fatal|Severe)\s*(.*?)\s(.*)""".r
 val PATTERN_ZOOKEEPER = """(\d{4}[^a-zA-Z]*)\s(INFO|ERROR|WARN|WARNING|TRACE|DEBUG|FATAL|SEVERE)\s*(.*?)\s(.*)""".r
 // val PATTERN = "" // TODO: get it from JSON file
+
+val reviewDF = spark.read.option("multiline", true).json("/Users/vaati/Desktop/LogParser/LogParser/info.json").printSchema()
 
 // ------------------------------------------------------------------------------------------------------------------------------
 
@@ -34,6 +37,7 @@ def parseLogLine(pattern: Regex): ( String => LogRecord) = {
 }
 
 val logData = sc.textFile("/Users/vaati/Desktop/loghub/Andriod/Andriod_2k.log")
+//val accessLogs = sc.textFile("/Users/vaati/Desktop/loghub/Hadoop/Hadoop_2k.log")
 //val logData = sc.textFile("/Users/vaati/Desktop/loghub/Apache/Apache_2k.log")
 //val logData = sc.textFile("/Users/vaati/Desktop/loghub/BGL/BGL_2k.log")
 //val logData = sc.textFile("/Users/vaati/Desktop/loghub/HDFS/HDFS_2k.log")

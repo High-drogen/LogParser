@@ -1,0 +1,47 @@
+{
+	"ANDROID" : {
+		"pattern": "(\\d{2}[^a-zA-Z]*)\\s(I|E|W|T|D|F|S|V)\\s(.*)",
+		"log_path": "/Users/vaati/Desktop/loghub/Andriod/Andriod_2k.log",
+		"csv_path": "/Users/vaati/Desktop/loghub/Andriod/Android.csv"
+	},
+	"APACHE" : {
+		"pattern": "(\\[(.*?)\\s(.*)\\s[0-9][1-9]\\s(\\d{2}:\\d{2}:\\d{2})\\s\\d{4}\\])(\\s\\[(.*?)\\]\\s)(.*)",
+		"log_path": "/Users/vaati/Desktop/loghub/Apache/Apache_2k.log",
+		"csv_path": "/Users/vaati/Desktop/loghub/Hadoop/Apache.csv"
+	},
+	"HADOOP" : {
+		"pattern": "([0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])\\s(\\d{2}:\\d{2}:\\d{2}))(.*)\\s(INFO|ERROR|WARN|TRACE|DEBUG|FATAL)\\s\\[(.*?)\\]\\s(.*\\..*?:)\\s(.*:{0,1})",
+		"log_path": "/Users/vaati/Desktop/loghub/Hadoop/Hadoop_2k.log",
+		"csv_path": "/Users/vaati/Desktop/loghub/Hadoop/Hadoop.csv"
+	},
+	"BGL" : {
+		"pattern": "((-|\\w*)\\s\\d*)\\s(\\d{4}.\\d{2}.\\d{2})(\\s\\w*-)*(.*?)\\s(\\d{4}.\\d{2}.\\d{2}.\\d{2}.\\d{2}.\\d{2}.\\d{6})\\s(.*)\\s(INFO|ERROR|WARNING|TRACE|DEBUG|FATAL)\\s(.*)",
+		"log_path": "/Users/vaati/Desktop/loghub/BGL/BGL_2k.log",
+		"csv_path": "/Users/vaati/Desktop/loghub/BGL/BGL.csv"
+	},
+	"HDFS" : {
+		"pattern": "(\\d*\\s)*(INFO|ERROR|WARN|WARNING|TRACE|DEBUG|FATAL|SEVERE)\\s(.*)",
+		"log_path": "/Users/vaati/Desktop/loghub/HDFS/HDFS_2k.log",
+		"csv_path": "/Users/vaati/Desktop/loghub/HDFS/HDFS.csv"
+	},
+	"OPENSTACK" : {
+		"pattern": "((\\d{4}[^a-zA-Z]*)\\s\\d*)\\s(INFO|ERROR|WARN|WARNING|TRACE|DEBUG|FATAL|SEVERE)\\s(.*)",
+		"log_path": "/Users/vaati/Desktop/loghub/OpenStack/OpenStack_2k.log",
+		"csv_path": "/Users/vaati/Desktop/loghub/OpenStack/OpenStack.csv"
+	},
+	"SPARK" : {
+		"pattern": "(\\d{2}[^a-zA-Z]*)\\s(INFO|ERROR|WARN|WARNING|TRACE|DEBUG|FATAL|SEVERE)\\s(.*)",
+		"log_path": "/Users/vaati/Desktop/loghub/Spark/Spark_2k.log",
+		"csv_path": "/Users/vaati/Desktop/loghub/Spark/Spark.csv"
+	},
+	"WINDOWS" : {
+		"pattern": "(\\d{4}[^a-zA-Z]*)\\s(Info|Error|Warn|Warning|Trace|Debug|Fatal|Severe)\\s*(.*?)\\s(.*)",
+		"log_path": "/Users/vaati/Desktop/loghub/Windows/Windows_2k.log",
+		"csv_path": "/Users/vaati/Desktop/loghub/Windows/Windows.csv"
+	},
+	"ZOOKEEPER" : {
+		"pattern": "(\\d{4}[^a-zA-Z]*)\\s(INFO|ERROR|WARN|WARNING|TRACE|DEBUG|FATAL|SEVERE)\\s*(.*?)\\s(.*)",
+		"log_path": "/Users/vaati/Desktop/loghub/Zookeeper/Zookeeper_2k.log",
+		"csv_path": "/Users/vaati/Desktop/loghub/Zookeeper/Zookeeper.csv"
+	}
+}
