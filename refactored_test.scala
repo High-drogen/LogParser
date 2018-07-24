@@ -1,23 +1,41 @@
 import scala.util.matching.Regex
 import org.apache.spark.sql.SQLContext
+import org.apache.spark.sql.types._ 
 
 // ----- THIS WILL BE CONTAINED IN AN EXTERNAL FILE -----------------------------------------------------------------------------
 
-val PATTERN = """(\d{2}[^a-zA-Z]*)\s(I|E|W|T|D|F|S|V)\s(.*)""".r
-val PATTERN_ALL = """([0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])\s(\d{2}:\d{2}:\d{2}))(.*)\s(INFO|ERROR|WARN|TRACE|DEBUG|FATAL)\s\[(.*?)\]\s(.*\..*?:)\s(.*:{0,1})""".r
-val PATTERN_APACHE = """(\[(.*?)\s(.*)\s[0-9][1-9]\s(\d{2}:\d{2}:\d{2})\s\d{4}\])(\s\[(.*?)\]\s)(.*)""".r
-val PATTERN_BGL = """((-|\w*)\s\d*)\s(\d{4}.\d{2}.\d{2})(\s\w*-)*(.*?)\s(\d{4}.\d{2}.\d{2}.\d{2}.\d{2}.\d{2}.\d{6})\s(.*)\s(INFO|ERROR|WARNING|TRACE|DEBUG|FATAL)\s(.*)""".r
-val PATTERN_HDFS = """(\d*\s)*(INFO|ERROR|WARN|WARNING|TRACE|DEBUG|FATAL|SEVERE)\s(.*)""".r
-val PATTERN_OPENSTACK = """((\d{4}[^a-zA-Z]*)\s\d*)\s(INFO|ERROR|WARN|WARNING|TRACE|DEBUG|FATAL|SEVERE)\s(.*)""".r
-val PATTERN_SPARK = """(\d{2}[^a-zA-Z]*)\s(INFO|ERROR|WARN|WARNING|TRACE|DEBUG|FATAL|SEVERE)\s(.*)""".r
-val PATTERN_WINDOWS = """(\d{4}[^a-zA-Z]*)\s(Info|Error|Warn|Warning|Trace|Debug|Fatal|Severe)\s*(.*?)\s(.*)""".r
-val PATTERN_ZOOKEEPER = """(\d{4}[^a-zA-Z]*)\s(INFO|ERROR|WARN|WARNING|TRACE|DEBUG|FATAL|SEVERE)\s*(.*?)\s(.*)""".r
-// val PATTERN = "" // TODO: get it from JSON file
+//val PATTERN = """(\d{2}[^a-zA-Z]*)\s(I|E|W|T|D|F|S|V)\s(.*)""".r
 
-val reviewDF = spark.read.option("multiline", true).json("/Users/vaati/Desktop/LogParser/LogParser/info.json").printSchema()
+val sqlContext = new SQLContext(sc)
+val df = sqlContext.read.option("multiline", true).json("/Users/vaati/Desktop/LogParser/LogParser/info.json")
+val child = df.select(df("ANDROID.pattern")).toDF("pattern")
+
+
+println(Console.RED + child.getClass + Console.WHITE)
+
+
+val thePattern = child.select(child("pattern"))
+thePattern.show()
+val DFtoProcess = sqlContext.sql("SELECT * FROM pattern")
+//val str: String = thePattern.mkString()
+
+
+
+//val regexStr: String = child.select(child("pattern")).toString()
+
+//println("CLASS OF REGEX " + regexStr.getClass)
+//println( Console.RED + "STRING CONTENT: " + regexStr + Console.WHITE )
+
+//val strrr = "Something"
+//println( Console.RED + strrr + Console.WHITE )
+//println( Console.RED + strrr.getClass + Console.WHITE )
+
+//val PATTERN = new Regex(regexStr)
+
+//println( Console.RED + "STRING CONTENT: " + PATTERN + Console.WHITE )
 
 // ------------------------------------------------------------------------------------------------------------------------------
-
+/*
 case class LogRecord(system: String, timestamp: String, SeverityLevel: String, message: String)
 
 def parseLogLine(pattern: Regex): ( String => LogRecord) = {
@@ -50,7 +68,7 @@ val logData = sc.textFile("/Users/vaati/Desktop/loghub/Andriod/Andriod_2k.log")
 def accessLogs = logData.map( parseLogLine(PATTERN) ).toDF()
 
 accessLogs.show()
-
+*/
 //accessLogs.write.format("com.databricks.spark.csv").option("delimiter",";").save("/Users/vaati/Desktop/loghub/Andriod/Android.csv")
 //accessLogs.write.format("com.databricks.spark.csv").option("delimiter",";").save("/Users/vaati/Desktop/loghub/Hadoop/Hadoop.csv")
 //accessLogs.write.format("com.databricks.spark.csv").option("delimiter",";").save("/Users/vaati/Desktop/loghub/Apache/Apache.csv")

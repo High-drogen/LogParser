@@ -10,7 +10,7 @@ val PATTERN_ANDROID = """(\d{2}[^a-zA-Z]*)\s(I|E|W|T|D|F|S|V)\s(.*)""".r
 
 case class LogRecord(system: String, timestamp: String, SeverityLevel: String, message: String)
 
-def parseLogLine(log: String, pattern: String = "DEFAULT_PATTERN"): LogRecord = {
+def parseLogLine(log: String): LogRecord = {
 	
 //  val result = pattern.findFirstMatchIn(log)
 //	val result = PATTERN_ALL.findFirstMatchIn(log)
