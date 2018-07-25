@@ -8,12 +8,10 @@ val sqlContext = new SQLContext(sc)
 val df = sqlContext.read.option("multiline", true).json("/Users/vaati/Desktop/LogParser/LogParser/info.json").toDF()
 
 val child_pattern = df.select("ANDROID.pattern")
-
 child_pattern.registerTempTable("tempcust")
+val pattern = sqlContext.sql("SELECT * FROM tempcust").first()
 
-val firstCityState = sqlContext.sql("SELECT * FROM tempcust").first()
-
-val PATTERN = firstCityState.getString(0).r
+val PATTERN = pattern.getString(0).r
 
 // ------------------------------------------------------------------------------------------------------------------------------
 
@@ -41,4 +39,4 @@ def accessLogs = logData.map( parseLogLine(PATTERN) ).toDF()
 
 accessLogs.show()
 
-accessLogs.write.format("com.databricks.spark.csv").option("delimiter",";").save("/Users/vaati/Desktop/loghub/Andriod/Android.csv")
+//accessLogs.write.format("com.databricks.spark.csv").option("delimiter",";").save("/Users/vaati/Desktop/loghub/Andriod/Android.csv")
