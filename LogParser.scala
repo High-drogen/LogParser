@@ -19,8 +19,8 @@ def parseLogLine(log: String): LogRecord = {
 //	val result4 = PATTERN_HDFS.findFirstMatchIn(log)
 //	val result5 = PATTERN_OPENSTACK.findFirstMatchIn(log)
 //	val result6 = PATTERN_SPARK.findFirstMatchIn(log)
-//	val result7 = PATTERN_WINDOWS.findFirstMatchIn(log)
-	val result8 = PATTERN_ZOOKEEPER.findFirstMatchIn(log)
+	val result7 = PATTERN_WINDOWS.findFirstMatchIn(log)
+//	val result8 = PATTERN_ZOOKEEPER.findFirstMatchIn(log)
 //	val result9 = PATTERN_ANDROID.findFirstMatchIn(log)
 
 //    if (result.isEmpty) {
@@ -77,23 +77,23 @@ def parseLogLine(log: String): LogRecord = {
 //		LogRecord( "Spark", m.group(1), m.group(2), m.group(3))
 //	}
 	
-//	if (result7.isEmpty) {
-//		println("Rejected Log Line: " + log)
-//		LogRecord("Empty2", "-", "-", "")
-//	}
-//	else {
-//		val m = result7.get
-//		LogRecord( "Windows", m.group(1), m.group(2), m.group(4))
-//	}
-	
-	if (result8.isEmpty) {
+	if (result7.isEmpty) {
 		println("Rejected Log Line: " + log)
 		LogRecord("Empty2", "-", "-", "")
 	}
 	else {
-		val m = result8.get
-		LogRecord( "Zookeeper", m.group(1), m.group(2), m.group(4))
+		val m = result7.get
+		LogRecord( "Windows", m.group(1), m.group(2), m.group(4))
 	}
+	
+//	if (result8.isEmpty) {
+//		println("Rejected Log Line: " + log)
+//		LogRecord("Empty2", "-", "-", "")
+//	}
+//	else {
+//		val m = result8.get
+//		LogRecord( "Zookeeper", m.group(1), m.group(2), m.group(4))
+//	}
 
 //	if (result9.isEmpty) {
 //		println("Rejected Log Line: " + log)
@@ -111,10 +111,10 @@ def parseLogLine(log: String): LogRecord = {
 //val accessLogs = sc.textFile("/Users/vaati/Desktop/LogHub Datasets/BGL/BGL.log").map(parseLogLine).toDF()
 //val accessLogs = sc.textFile("/Users/vaati/Desktop/LogHub Datasets/HDFS/HDFS.log").map(parseLogLine).toDF()
 //val accessLogs = sc.textFile("/Users/vaati/Desktop/loghub/OpenStack/OpenStack_2k.log").map(parseLogLine).toDF()
-//val accessLogs = sc.textFile("/Users/vaati/Desktop/loghub/Spark/Spark_2k.log").map(parseLogLine).toDF()
-//val accessLogs = sc.textFile("/Users/vaati/Desktop/loghub/Windows/Windows_2k.log").map(parseLogLine).toDF()
-val accessLogs = sc.textFile("/Users/vaati/Desktop/LogHub Datasets/Zookeeper/Zookeeper.log").map(parseLogLine).toDF()
-//val accessLogs = sc.textFile("/Users/vaati/Desktop/loghub/Andriod/Andriod_2k.log").map(parseLogLine).toDF()
+val accessLogs = sc.textFile("/Users/vaati/Desktop/loghub/Spark/Spark_2k.log").map(parseLogLine).toDF()
+val accessLogs = sc.textFile("/Users/vaati/Desktop/loghub/Windows/Windows_2k.log").map(parseLogLine).toDF()
+//val accessLogs = sc.textFile("/Users/vaati/Desktop/LogHub Datasets/Zookeeper/Zookeeper.log").map(parseLogLine).toDF()
+//val accessLogs = sc.textFile("/Users/vaati/Desktop/loghub/Android/Android_2k.log").map(parseLogLine).toDF()
 
 accessLogs.show()
 
@@ -124,6 +124,6 @@ accessLogs.show()
 //accessLogs.write.format("com.databricks.spark.csv").save("/Users/vaati/Desktop/LogHub Datasets/HDFS/HDFS.csv")
 //accessLogs.write.format("com.databricks.spark.csv").save("/Users/vaati/Desktop/loghub/OpenStack/OpenStack.csv")
 //accessLogs.write.format("com.databricks.spark.csv").save("/Users/vaati/Desktop/loghub/Spark/Spark.csv")
-//accessLogs.write.format("com.databricks.spark.csv").save("/Users/vaati/Desktop/loghub/Windows/Windows.csv")
-accessLogs.write.format("com.databricks.spark.csv").save("/Users/vaati/Desktop/LogHub Datasets/Zookeeper/Zookeeper.csv")
-//accessLogs.write.format("com.databricks.spark.csv").option("delimiter",";").save("/Users/vaati/Desktop/loghub/Andriod/Android.csv")
+accessLogs.write.format("com.databricks.spark.csv").save("/Users/vaati/Desktop/loghub/Windows/Windows.csv")
+//accessLogs.write.format("com.databricks.spark.csv").save("/Users/vaati/Desktop/LogHub Datasets/Zookeeper/Zookeeper.csv")
+//accessLogs.write.format("com.databricks.spark.csv").option("delimiter","|").save("/Users/vaati/Desktop/loghub/Android/Android.csv")

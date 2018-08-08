@@ -44,5 +44,5 @@ def accessLogs = logData.map( parseLogLine(PATTERN) ).toDF()
 
 accessLogs.show()
 
-//accessLogs.write.format("com.databricks.spark.csv").option("delimiter",";").save("/Users/vaati/Desktop/loghub/Andriod/Android.csv")
+//accessLogs.write.format("com.databricks.spark.csv").option("delimiter","|").save("/Users/vaati/Desktop/loghub/Andriod/Android.csv")
 */
