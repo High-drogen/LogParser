@@ -34,7 +34,7 @@ def parseLogLine(log: String): LogRecord = {
 //    }
 //    else {
 //        val m = result.get
-//		  LogRecord( "Hadoop", m.group(1), m.group(6), "N/A", m.group(8)+m.group(9))
+//		  LogRecord( "Hadoop", m.group(1), m.group(6), "N/A", leftQuote+m.group(8)+m.group(9)+rightQuote)
 //    }
 
 //    if (result2.isEmpty) {
@@ -43,7 +43,7 @@ def parseLogLine(log: String): LogRecord = {
 //    }
 //    else {
 //		val n = result2.get
-//		LogRecord( "Apache", n.group(1), n.group(6), "-", n.group(7) )
+//		LogRecord( "Apache", n.group(1), n.group(6), "-", leftQuote+n.group(7)+rightQuote )
 //    }
 
 	// if (result3.isEmpty) {
@@ -52,7 +52,7 @@ def parseLogLine(log: String): LogRecord = {
 	// }
 	// else {
  //   	val m = result3.get
-	// 	LogRecord( "BGL/P", m.group(6), m.group(9), "TODO", m.group(10))
+	// 	LogRecord( "BGL/P", m.group(6), m.group(9), "TODO", leftQuote+m.group(10)+rightQuote)
 	// }
 	
 //	if (result4.isEmpty) {
@@ -61,7 +61,7 @@ def parseLogLine(log: String): LogRecord = {
 //	}
 //	else {
 //    	val m = result4.get
-//		LogRecord( "HDFS", "N/A for the moment", m.group(2), "-", m.group(3))
+//		LogRecord( "HDFS", "N/A for the moment", m.group(2), "-", leftQuote+m.group(3)+rightQuote)
 //	}
 	
 	if (result5.isEmpty) {
@@ -70,7 +70,7 @@ def parseLogLine(log: String): LogRecord = {
 	}
 	else {
    	val m = result5.get
-		LogRecord( "OpenStack", m.group(1)+" "+ m.group(2), m.group(4), "TODO", m.group(5))
+		LogRecord( "OpenStack", m.group(1)+" "+ m.group(2), m.group(4), "TODO", leftQuote+m.group(5)+rightQuote)
 	}
 
 	// if (result6.isEmpty) {
@@ -79,7 +79,7 @@ def parseLogLine(log: String): LogRecord = {
 	// }
 	// else {
 	// 	val m = result6.get
-	// 	LogRecord( "Spark", m.group(1), m.group(2), "-", leftQuote+ m.group(3) +rightQuote )
+	// 	LogRecord( "Spark", m.group(1), m.group(2), "-", leftQuote+m.group(3)+rightQuote )
 	// }
 	
 //	if (result7.isEmpty) {
@@ -88,7 +88,7 @@ def parseLogLine(log: String): LogRecord = {
 //	}
 //	else {
 //		val m = result7.get
-//		LogRecord( "Windows", m.group(1), m.group(2), "TODO", m.group(4))
+//		LogRecord( "Windows", m.group(1), m.group(2), "TODO", leftQuote+m.group(4)+rightQuote)
 //	}
 	
 	// if (result8.isEmpty) {
@@ -97,7 +97,7 @@ def parseLogLine(log: String): LogRecord = {
 	// }
 	// else {
 	// 	val m = result8.get
-	// 	LogRecord( "Zookeeper", m.group(1), m.group(3), "TODO", m.group(5))
+	// 	LogRecord( "Zookeeper", m.group(1), m.group(3), "TODO", leftQuote+m.group(5)+rightQuote)
 	// }
 
 	// if (result9.isEmpty) {
@@ -106,7 +106,7 @@ def parseLogLine(log: String): LogRecord = {
 	// }
 	// else {
 	// 	val m = result9.get
-	// 	LogRecord( "Android", m.group(1), m.group(4), "TODO", m.group(5))
+	// 	LogRecord( "Android", m.group(1), m.group(4), "TODO", leftQuote+m.group(5)+rightQuote)
 	// }
 
 }
@@ -124,11 +124,11 @@ val accessLogs = sc.textFile("/Users/vaati/Desktop/loghub/OpenStack/OpenStack_2k
 accessLogs.show()
 
 // accessLogs.write.format("com.databricks.spark.csv").option("delimiter",";").save("/Users/vaati/Desktop/loghub/Hadoop/Hadoop.csv")
-//accessLogs.write.format("com.databricks.spark.csv").save("/Users/vaati/Desktop/LogHub Datasets/Apache/Apache.csv")
-// accessLogs.write.format("com.databricks.spark.csv").save("/Users/vaati/Desktop/LogHub Datasets/BGL/BGL.csv")
-//accessLogs.write.format("com.databricks.spark.csv").save("/Users/vaati/Desktop/LogHub Datasets/HDFS/HDFS.csv")
+//accessLogs.write.format("com.databricks.spark.csv").option("delimiter",";").option("quote", "\u0000").save("/Users/vaati/Desktop/LogHub Datasets/Apache/Apache.csv")
+// accessLogs.write.format("com.databricks.spark.csv").option("delimiter",";").option("quote", "\u0000").save("/Users/vaati/Desktop/LogHub Datasets/BGL/BGL.csv")
+//accessLogs.write.format("com.databricks.spark.csv").option("delimiter",";").option("quote", "\u0000").save("/Users/vaati/Desktop/LogHub Datasets/HDFS/HDFS.csv")
 accessLogs.write.format("com.databricks.spark.csv").option("delimiter",";").option("quote", "\u0000").save("/Users/vaati/Desktop/loghub/OpenStack/OpenStack.csv")
-// accessLogs.write.format("com.databricks.spark.csv").option("header", true).option("quote", "\u0000").save("/Users/vaati/Desktop/loghub/Spark/Spark.csv")
-//accessLogs.write.format("com.databricks.spark.csv").save("/Users/vaati/Desktop/loghub/Windows/Windows.csv")
+// accessLogs.write.format("com.databricks.spark.csv").option("delimiter",";").option("quote", "\u0000").save("/Users/vaati/Desktop/loghub/Spark/Spark.csv")
+//accessLogs.write.format("com.databricks.spark.csv").option("delimiter",";").option("quote", "\u0000").save("/Users/vaati/Desktop/loghub/Windows/Windows.csv")
 // accessLogs.write.format("com.databricks.spark.csv").option("delimiter",";").option("quote", "\u0000").save("/Users/vaati/Desktop/LogHub Datasets/Zookeeper/Zookeeper.csv")
 // accessLogs.write.format("com.databricks.spark.csv").option("delimiter",";").option("quote", "\u0000").save("/Users/vaati/Desktop/loghub/Android/Android.csv")
