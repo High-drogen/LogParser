@@ -1,58 +1,58 @@
 {
 	"info": [
-		{
-		"system": "ANDROID",
-		"pattern": "(\\d{2}[^a-zA-Z]*)\\s(I|E|W|T|D|F|S|V)\\s(.*)",
-		"log_path": "/Users/vaati/Desktop/loghub/Andriod/Andriod_2k.log",
-		"csv_path": "/Users/vaati/Desktop/loghub/Andriod/Android.csv"
-		},
-		{
-			"system": "APACHE",
-			"pattern": "(\\[(.*?)\\s(.*)\\s[0-9][1-9]\\s(\\d{2}:\\d{2}:\\d{2})\\s\\d{4}\\])(\\s\\[(.*?)\\]\\s)(.*)",
-			"log_path": "/Users/vaati/Desktop/loghub/Apache/Apache_2k.log",
-			"csv_path": "/Users/vaati/Desktop/loghub/Hadoop/Apache.csv"
-		},
-		{
-			"system": "HADOOP",
-			"pattern": "([0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])\\s(\\d{2}:\\d{2}:\\d{2}))(.*)\\s(INFO|ERROR|WARN|TRACE|DEBUG|FATAL)\\s\\[(.*?)\\]\\s(.*\\..*?:)\\s(.*:{0,1})",
-			"log_path": "/Users/vaati/Desktop/loghub/Hadoop/Hadoop_2k.log",
-			"csv_path": "/Users/vaati/Desktop/loghub/Hadoop/Hadoop.csv"
-		},
-		{
-			"system": "BGL",
-			"pattern": "((-|\\w*)\\s\\d*)\\s(\\d{4}.\\d{2}.\\d{2})(\\s\\w*-)*(.*?)\\s(\\d{4}.\\d{2}.\\d{2}.\\d{2}.\\d{2}.\\d{2}.\\d{6})\\s(.*)\\s(INFO|ERROR|WARNING|TRACE|DEBUG|FATAL)\\s(.*)",
-			"log_path": "/Users/vaati/Desktop/loghub/BGL/BGL_2k.log",
-			"csv_path": "/Users/vaati/Desktop/loghub/BGL/BGL.csv"
-		},
-		{
-			"system": "HDFS",
-			"pattern": "(\\d*\\s)*(INFO|ERROR|WARN|WARNING|TRACE|DEBUG|FATAL|SEVERE)\\s(.*)",
-			"log_path": "/Users/vaati/Desktop/loghub/HDFS/HDFS_2k.log",
-			"csv_path": "/Users/vaati/Desktop/loghub/HDFS/HDFS.csv"
-		},
-		{
-			"system": "OPENSTACK",
-			"pattern": "((\\d{4}[^a-zA-Z]*)\\s\\d*)\\s(INFO|ERROR|WARN|WARNING|TRACE|DEBUG|FATAL|SEVERE)\\s(.*)",
-			"log_path": "/Users/vaati/Desktop/loghub/OpenStack/OpenStack_2k.log",
-			"csv_path": "/Users/vaati/Desktop/loghub/OpenStack/OpenStack.csv"
-		},
-		{
-			"system": "SPARK",
-			"pattern": "(\\d{2}[^a-zA-Z]*)\\s(INFO|ERROR|WARN|WARNING|TRACE|DEBUG|FATAL|SEVERE)\\s(.*)",
-			"log_path": "/Users/vaati/Desktop/loghub/Spark/Spark_2k.log",
-			"csv_path": "/Users/vaati/Desktop/loghub/Spark/Spark.csv"
-		},
-		{
-			"system": "WINDOWS",
-			"pattern": "(\\d{4}[^a-zA-Z]*)\\s(Info|Error|Warn|Warning|Trace|Debug|Fatal|Severe)\\s*(.*?)\\s(.*)",
-			"log_path": "/Users/vaati/Desktop/loghub/Windows/Windows_2k.log",
-			"csv_path": "/Users/vaati/Desktop/loghub/Windows/Windows.csv"
-		},
-		{
-			"system": "ZOOKEEPER",
-			"pattern": "(\\d{4}[^a-zA-Z]*)\\s(INFO|ERROR|WARN|WARNING|TRACE|DEBUG|FATAL|SEVERE)\\s*(.*?)\\s(.*)",
-			"log_path": "/Users/vaati/Desktop/loghub/Zookeeper/Zookeeper_2k.log",
-			"csv_path": "/Users/vaati/Desktop/loghub/Zookeeper/Zookeeper.csv"
-		}
+		[
+			"ANDROID",
+			"(\\d{2}[^a-zA-Z]*)(\\.)(\\d+\\s*)*(I|E|W|T|D|F|S|V)\\s(.*)",
+			"/Users/vaati/Desktop/loghub/Android/Android_2k.log",
+			"/Users/vaati/Desktop/loghub/Android/Android.csv"
+		],
+		[
+			"APACHE",
+			"(\\[)(.*?\\s.*\\s[0-3][0-9]\\s\\d{2}:\\d{2}:\\d{2}\\s\\d{4})(\\])(\\s\\[(.*?)\\]\\s)(.*)",
+			"/Users/vaati/Desktop/loghub/Apache/Apache_2k.log",
+			"/Users/vaati/Desktop/loghub/Hadoop/Apache.csv"
+		],
+		[
+			"HADOOP",
+			"([0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])\\s(\\d{2}:\\d{2}:\\d{2}))(.*)\\s(INFO|ERROR|WARN|TRACE|DEBUG|FATAL)\\s\\[(.*?)\\]\\s(.*\\..*?:)\\s(.*:{0,1})",
+			"/Users/vaati/Desktop/loghub/Hadoop/Hadoop_2k.log",
+			"/Users/vaati/Desktop/loghub/Hadoop/Hadoop.csv"
+		],
+		[
+			"BGL",
+			"((-|\\w*)\\s\\d*)\\s(\\d{4}.\\d{2}.\\d{2})(\\s\\w*-)*(.*?)\\s(\\d{4}.\\d{2}.\\d{2}.\\d{2}.\\d{2}.\\d{2})(.\\d{6})\\s(.*)\\s((INFO|ERROR|WARNING|TRACE|DEBUG|SEVERE|FATAL|FAILURE))($|\\s(.*))",
+			"/Users/vaati/Desktop/loghub/BGL/BGL_2k.log",
+			"/Users/vaati/Desktop/loghub/BGL/BGL.csv"
+		],
+		[
+			"HDFS",
+			"(\\d*\\s)*(INFO|ERROR|WARN|WARNING|TRACE|DEBUG|FATAL|SEVERE)\\s(.*)",
+			"/Users/vaati/Desktop/loghub/HDFS/HDFS_2k.log",
+			"/Users/vaati/Desktop/loghub/HDFS/HDFS.csv"
+		],
+		[
+			"OPENSTACK",
+			"(\\d{4}[^a-zA-Z]*?)_(\\d*[^a-zA-Z]*?)\\s(\\d*[^a-zA-Z]*)(INFO|ERROR|WARN|WARNING|TRACE|DEBUG|FATAL|SEVERE)\\s(.*)",
+			"/Users/vaati/Desktop/loghub/OpenStack/OpenStack_2k.log",
+			"/Users/vaati/Desktop/loghub/OpenStack/OpenStack.csv"
+		],
+		[
+			"SPARK",
+			"(\\d{2}[^a-zA-Z]*)\\s(INFO|ERROR|WARN|WARNING|TRACE|DEBUG|FATAL|SEVERE)\\s(.*)",
+			"/Users/vaati/Desktop/loghub/Spark/Spark_2k.log",
+			"/Users/vaati/Desktop/loghub/Spark/Spark.csv"
+		],
+		[
+			"WINDOWS",
+			"(\\d{4}[^a-zA-Z]*),\\s(Info|Error|Warn|Warning|Trace|Debug|Fatal|Severe)\\s*(.*?)\\s(\\S.*)",
+			"/Users/vaati/Desktop/loghub/Windows/Windows_2k.log",
+			"/Users/vaati/Desktop/loghub/Windows/Windows.csv"
+		],
+		[
+			"ZOOKEEPER",
+			"(\\d{4}[^a-zA-Z]*)(,\\d{3}[^a-zA-Z]*)(INFO|ERROR|WARN|WARNING|TRACE|DEBUG|FATAL|SEVERE)\\s*(.*?)\\s-\\s(.*)",
+			"/Users/vaati/Desktop/loghub/Zookeeper/Zookeeper_2k.log",
+			"/Users/vaati/Desktop/loghub/Zookeeper/Zookeeper.csv"
+		]
 	]
 }
