@@ -10,7 +10,7 @@
 			"APACHE",
 			"(\\[)(.*?\\s.*\\s[0-3][0-9]\\s\\d{2}:\\d{2}:\\d{2}\\s\\d{4})(\\])(\\s\\[(.*?)\\]\\s)(.*)",
 			"/Users/vaati/Desktop/loghub/Apache/Apache_2k.log",
-			"/Users/vaati/Desktop/loghub/Hadoop/Apache.csv"
+			"/Users/vaati/Desktop/loghub/Apache/Apache.csv"
 		],
 		[
 			"HADOOP",

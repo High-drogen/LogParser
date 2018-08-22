@@ -5,14 +5,54 @@ import org.apache.spark.sql.Row
 import spark.implicits._
 import org.apache.spark.rdd.RDD
 
-// -------------------------------------------------------------------------------------------------------------------------------
 
-// case class parsingInfo(system: String, pattern: String, input: String, output: String)
+//--------------
 
-// def foo(r: Row) = {
+import org.apache.hadoop.fs.Path
+import org.apache.hadoop.conf.Configuration
+import org.apache.hadoop.fs.FileSystem
+import org.apache.spark.sql.Row
 
-// 	parsingInfo( r.getAs[String]("system"), r.getAs[String]("pattern"), r.getAs[String]("input"), r.getAs[String]("output"))
-// }
+def findNull(row:Row):String = {
+	if (row.getString(2) == "V") {
+		"10"
+	}
+	else if (row.getString(2) == "INFO" || row.getString(2) == "info" || row.getString(2) == "notice" || row.getString(2) == "Info" || row.getString(2) == "I" ) {
+		"30"
+	}
+	else if(row.getString(2) == "ERROR" || row.getString(2) == "error" || row.getString(2) == "Error" || row.getString(2) == "E" ){
+		"50"
+	}
+	else if(row.getString(2) == "WARNING" || row.getString(2) == "warning" || row.getString(2) == "Warning" || row.getString(2) == "W" || row.getString(2) == "WARN" ){
+		"40"
+	}
+	else if(row.getString(2) == "DEBUG" || row.getString(2) == "debug" || row.getString(2) == "Debug" || row.getString(2) == "D" ){
+		"10"
+	}
+	else if(row.getString(2) == "FATAL" || row.getString(2) == "fatal" || row.getString(2) == "Fatal" || row.getString(2) == "F" ){
+		"60"
+	}
+	else if(row.getString(2) == "SEVERE" || row.getString(2) == "severe" || row.getString(2) == "Severe" || row.getString(2) == "S" ){
+		"60"
+	}
+	else if(row.getString(2) == "FAILURE" || row.getString(2) == "failure" || row.getString(2) == "Failure" ){
+		"70"
+	}
+	else if(row.getString(2) == "C") {
+		"80"
+	}
+	else {
+		"??"
+	}
+}
+
+spark.sqlContext.udf.register("findNull", findNull _)
+
+//--------------
+
+
+
+
 val leftQuote = "\u201C"
 val rightQuote = "\u201D"
 
@@ -44,8 +84,6 @@ while(valeur != -1) {
 	println("Name : " + outputName)
 
 	val PATTERN = patternName.r
-
-	/*---------------------------------------------------------------------------------------------------------------------------*/
 
 	def parseLogLine(pattern: Regex): ( String => LogRecord) = {
 
@@ -81,104 +119,67 @@ while(valeur != -1) {
 		}
 	}
 
-	val logData = sc.textFile(inputName)
+	// val logData = sc.textFile(inputName)
 
-	def accessLogs = logData.map( parseLogLine(PATTERN) ).toDF()
+	// def accessLogs = logData.map( parseLogLine(PATTERN) ).toDF()
 
-	accessLogs.show()
+	// accessLogs.show()
 
-	/*---------------------------------------------------------------------------------------------------------------------------*/
 
+	// accessLogs.write.format("com.databricks.spark.csv").option("delimiter",";").option("quote", "\u0000").save(outputName)
+
+
+// --- SEVERITY INDEX ADDITION --------------------------------------------
+
+	val path = outputName + "/"
+	val conf = new Configuration()
+	val fs = FileSystem.get(conf)
+	val p = new Path(path)
+	val ls = fs.listStatus(p)
+	 
+	ls.foreach( x => {
+		val f = x.getPath.toString
+
+		if(f == "file:"+outputName+"/.DS_Store" || f == "file:"+outputName+"/_SUCCESS") {
+		} else {
+			val formattedLog = spark.read.option("delimiter",";").csv(f).toDF
+
+			// spark.sqlContext.udf.register("findNull", findNull _)
+			val newFormattedLog = formattedLog.withColumn("_c3",callUDF("findNull",struct(formattedLog.columns.map(formattedLog(_)) : _*) ))
+			// newFormattedLog.show
+			newFormattedLog.write.format("com.databricks.spark.csv").option("delimiter",";").save(f+"Final.csv")
+
+		}
+	} )
+
+// -----------------------------------------------------------------------
+
+// ---- DATE FORMATTING -------------------------------------------------------------------
+
+
+// ----------------------------------------------------------------------------------------
 
     valeur = valeur - 1
 }
 
 
 
-// val rddRows: RDD[Row] =
-//       df2.rdd.map(row => {
-      
-//         val lstRow = row.toSeq.toList
-        
-//         var lstRowNew = lstRow
-//         // do stuff on the new lstRow here 
-//         println(lstRowNew(1))
-
-//         Row.fromSeq(lstRowNew)
-//       })
-
-// rddRows.getClass
-
-// val dfOut = spark.createDataFrame(rddRows, df2.schema)
 
 
 
-// df2.map( r => { 
-// 	foo
-// 	println("HAHAHA")
-// })
-
- // df2.dtypes.foreach {  f =>
- //      val fName = f._1
- //      val fType = f._2
- //      if (fType  == "StringType") { println(s"STRING_TYPE") }
- //      if (fType  == "MapType") { println(s"MAP_TYPE") }
- //      //else {println("....")}
- //      println("Name %s Type:%s - all:%s".format(fName , fType, f))
-
- //    }
-
- // df2.foreach { row => {
- // 						val system = println(row(0))
- // 						val pattern = println(row(1))
- // 						val input = println(row(2).toString)
- // 						val output = println(row(3))
- // 					}
-           // row.toSeq.foreach{ 
-           // 		col => {
-           // 			println(col)
-           // 		}
-           // }
-    // }
 
 
-// df.registerTempTable("tempSmthg")
-// val smthg = sqlContext.sql("SELECT * FROM tempSmthg")
-// smthg.show
-// smthg.printSchema
-
-// val child_pattern = df.select("info")
-// // child_pattern.registerTempTable("tempcust")
-// val pattern = sqlContext.sql("SELECT info.system FROM tempcust").first()
-// println("PATTERN: " + pattern)
-// pattern.getClass
-// println(pattern.getAs[Seq[String]]("system")(0))
 
 
-// ------------------------------------------------------------------------------------------------------------------------------
-/*
-case class LogRecord(system: String, timestamp: String, SeverityLevel: String, message: String)
 
-def parseLogLine(pattern: Regex): ( String => LogRecord) = {
 
-	log => {
-		val result = pattern.findFirstMatchIn(log)
-		
-		if (result.isEmpty) {
-			println("Rejected Log Line: " + log)
-			LogRecord("Empty2", "-", "-", "")
-		}
-		else {
-			val m = result.get
-			LogRecord( "Android", m.group(1), m.group(2), leftQuote+m.group(3)+rightQuote )
-		}
-	}
-}
 
-val logData = sc.textFile("/Users/vaati/Desktop/loghub/Andriod/Andriod_2k.log")
 
-def accessLogs = logData.map( parseLogLine(PATTERN) ).toDF()
 
-accessLogs.show()
-*/
-//accessLogs.write.format("com.databricks.spark.csv").option("delimiter","|").save("/Users/vaati/Desktop/loghub/Andriod/Android.csv")
+
+
+
+
+
+
+

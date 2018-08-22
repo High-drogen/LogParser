@@ -45,7 +45,7 @@ def findNull(row:Row):String = {
  
 spark.sqlContext.udf.register("findNull", findNull _)
 
-val path = "/Users/vaati/Desktop/LogHub Datasets/Zookeeper/Zookeeper.csv/"
+val path = "/Users/vaati/Desktop/LogHub Datasets/Zookeeper/Zookeeper.csv/"					// HERE
 val conf = new Configuration()
 val fs = FileSystem.get(conf)
 val p = new Path(path)
@@ -53,9 +53,9 @@ val ls = fs.listStatus(p)
  
 ls.foreach( x => {
 	val f = x.getPath.toString
-	println("SADJHSALFHLKDJFLK : " +f)
+	// println("SADJHSALFHLKDJFLK : " +f)
 
-	if(f == "file:/Users/vaati/Desktop/LogHub Datasets/Zookeeper/Zookeeper.csv/.DS_Store" || f == "file:/Users/vaati/Desktop/LogHub Datasets/Zookeeper/Zookeeper.csv/_SUCCESS") {
+	if(f == "file:/Users/vaati/Desktop/LogHub Datasets/Zookeeper/Zookeeper.csv/.DS_Store" || f == "file:/Users/vaati/Desktop/LogHub Datasets/Zookeeper/Zookeeper.csv/_SUCCESS") {	// HERE
 	} else {
 		val formattedLog = spark.read.option("delimiter",";").csv(f).toDF
 
