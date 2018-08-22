@@ -5,13 +5,16 @@ import org.apache.spark.sql.Row
 import spark.implicits._
 import org.apache.spark.rdd.RDD
 
+// -------------
+
+import org.joda.time.{DateTimeZone}
+import org.joda.time.format.DateTimeFormat
 
 //--------------
 
 import org.apache.hadoop.fs.Path
 import org.apache.hadoop.conf.Configuration
 import org.apache.hadoop.fs.FileSystem
-import org.apache.spark.sql.Row
 
 def findNull(row:Row):String = {
 	if (row.getString(2) == "V") {
@@ -58,7 +61,7 @@ val rightQuote = "\u201D"
 
 val sqlContext = new SQLContext(sc)
 val df = sqlContext.read.option("multiline", true).json("/Users/vaati/Desktop/LogParser/LogParser/info.json").toDF
-val df2 = df.withColumn("info", explode($"info")).withColumn("system", $"info"(0)).withColumn("pattern", $"info"(1)).withColumn("input", $"info"(2)).withColumn("output", $"info"(3)).drop("info").withColumn("id",monotonicallyIncreasingId)
+val df2 = df.withColumn("info", explode($"info")).withColumn("system", $"info"(0)).withColumn("pattern", $"info"(1)).withColumn("input", $"info"(2)).withColumn("output", $"info"(3)).withColumn("formatDate", $"info"(4)).drop("info").withColumn("id",monotonicallyIncreasingId)
 df2.show()
 df2.registerTempTable("mytable")
 df2.count()
@@ -77,11 +80,13 @@ while(valeur != -1) {
 	val patternName = kaka.select($"pattern").collectAsList().get(0)(0).toString
 	val inputName = kaka.select($"input").collectAsList().get(0)(0).toString
 	val outputName = kaka.select($"output").collectAsList().get(0)(0).toString
+	val dateFormatName = kaka.select($"formatDate").collectAsList().get(0)(0).toString
 
 	println("Name : " + systName)
 	println("Name : " + patternName)
 	println("Name : " + inputName)
 	println("Name : " + outputName)
+	println("Name : " + dateFormatName)
 
 	val PATTERN = patternName.r
 
@@ -119,17 +124,13 @@ while(valeur != -1) {
 		}
 	}
 
-	// val logData = sc.textFile(inputName)
+	val logData = sc.textFile(inputName)
 
-	// def accessLogs = logData.map( parseLogLine(PATTERN) ).toDF()
+	def accessLogs = logData.map( parseLogLine(PATTERN) ).toDF()
 
 	// accessLogs.show()
-
-
 	// accessLogs.write.format("com.databricks.spark.csv").option("delimiter",";").option("quote", "\u0000").save(outputName)
 
-
-// --- SEVERITY INDEX ADDITION --------------------------------------------
 
 	val path = outputName + "/"
 	val conf = new Configuration()
@@ -144,20 +145,33 @@ while(valeur != -1) {
 		} else {
 			val formattedLog = spark.read.option("delimiter",";").csv(f).toDF
 
-			// spark.sqlContext.udf.register("findNull", findNull _)
 			val newFormattedLog = formattedLog.withColumn("_c3",callUDF("findNull",struct(formattedLog.columns.map(formattedLog(_)) : _*) ))
-			// newFormattedLog.show
-			newFormattedLog.write.format("com.databricks.spark.csv").option("delimiter",";").save(f+"Final.csv")
+			newFormattedLog.show
+			// newFormattedLog.write.format("com.databricks.spark.csv").option("delimiter",";").save(f+"Final.csv")
 
+			if(dateFormatName != "NO"){
+				println("dateFormatName: " + dateFormatName)
+				val modif = newFormattedLog.withColumn("Date",unix_timestamp(newFormattedLog.col("_c1"), dateFormatName)).drop("_c1")
+				
+				var strCustDate = "YYYY-MM-dd hh:mm:ss"
+				if(systName == "ANDROID"){
+					strCustDate = "20YY-MM-dd HH:mm:ss"
+				}
+
+				val tsar = modif.withColumn("Date", to_utc_timestamp(from_unixtime($"Date"),strCustDate)).alias("timestamp")
+				tsar.show
+				
+				val new_df = tsar.select("_c0", "Date", "_c2", "_c3", "_c4")
+				new_df.show
+
+				val tempDir = f + "_tmp"
+				new_df.write.format("com.databricks.spark.csv").option("delimiter",";").option("timestampFormat", "YYYY-MM-dd HH:mm:ss").save(f+"this.csv")
+			} else {
+				println("NOTHING TO FORMAT")
+				newFormattedLog.write.format("com.databricks.spark.csv").option("delimiter",";").option("timestampFormat", "YYYY-MM-dd HH:mm:ss").save(f+"this.csv")
+			}
 		}
 	} )
-
-// -----------------------------------------------------------------------
-
-// ---- DATE FORMATTING -------------------------------------------------------------------
-
-
-// ----------------------------------------------------------------------------------------
 
     valeur = valeur - 1
 }
