@@ -5,12 +5,8 @@ import org.apache.spark.sql.Row
 import spark.implicits._
 import org.apache.spark.rdd.RDD
 
-// -------------
-
 import org.joda.time.{DateTimeZone}
 import org.joda.time.format.DateTimeFormat
-
-//--------------
 
 import org.apache.hadoop.fs.Path
 import org.apache.hadoop.conf.Configuration
@@ -52,9 +48,6 @@ def findNull(row:Row):String = {
 spark.sqlContext.udf.register("findNull", findNull _)
 
 //--------------
-
-
-
 
 val leftQuote = "\u201C"
 val rightQuote = "\u201D"
@@ -128,8 +121,8 @@ while(valeur != -1) {
 
 	def accessLogs = logData.map( parseLogLine(PATTERN) ).toDF()
 
-	// accessLogs.show()
-	// accessLogs.write.format("com.databricks.spark.csv").option("delimiter",";").option("quote", "\u0000").save(outputName)
+	accessLogs.show()
+	accessLogs.write.format("com.databricks.spark.csv").option("delimiter",";").option("quote", "\u0000").save(outputName)
 
 
 	val path = outputName + "/"

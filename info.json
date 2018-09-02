@@ -10,8 +10,8 @@
 		[
 			"APACHE",
 			"(\\[)(.*?\\s.*\\s[0-3][0-9]\\s\\d{2}:\\d{2}:\\d{2}\\s\\d{4})(\\])(\\s\\[(.*?)\\]\\s)(.*)",
-			"/Users/vaati/Desktop/loghub/Apache/Apache_2k.log",
-			"/Users/vaati/Desktop/loghub/Apache/Apache.csv",
+			"/Users/vaati/Desktop/LogHub Datasets/Apache/Apache.log",
+			"/Users/vaati/Desktop/LogHub Datasets/Apache/Apache.csv",
 			"EEE MMM dd HH:mm:ss yyyy"
 		],
 		[
@@ -24,15 +24,15 @@
 		[
 			"BGL",
 			"((-|\\w*)\\s\\d*)\\s(\\d{4}.\\d{2}.\\d{2})(\\s\\w*-)*(.*?)\\s(\\d{4}.\\d{2}.\\d{2}.\\d{2}.\\d{2}.\\d{2})(.\\d{6})\\s(.*)\\s((INFO|ERROR|WARNING|TRACE|DEBUG|SEVERE|FATAL|FAILURE))($|\\s(.*))",
-			"/Users/vaati/Desktop/loghub/BGL/BGL_2k.log",
-			"/Users/vaati/Desktop/loghub/BGL/BGL.csv",
+			"/Users/vaati/Desktop/LogHub Datasets/BGL/BGL.log",
+			"/Users/vaati/Desktop/LogHub Datasets/BGL/BGL.csv",
 			"YYYY-MM-dd-HH.mm.ss"
 		],
 		[
 			"HDFS",
 			"(\\d*\\s)*(INFO|ERROR|WARN|WARNING|TRACE|DEBUG|FATAL|SEVERE)\\s(.*)",
-			"/Users/vaati/Desktop/loghub/HDFS/HDFS_2k.log",
-			"/Users/vaati/Desktop/loghub/HDFS/HDFS.csv",
+			"/Users/vaati/Desktop/LogHub Datasets/HDFS/HDFS.log",
+			"/Users/vaati/Desktop/LogHub Datasets/HDFS/HDFS.csv",
 			"NO"
 		],
 		[
@@ -59,8 +59,8 @@
 		[
 			"ZOOKEEPER",
 			"(\\d{4}[^a-zA-Z]*)(,\\d{3}[^a-zA-Z]*)(INFO|ERROR|WARN|WARNING|TRACE|DEBUG|FATAL|SEVERE)\\s*(.*?)\\s-\\s(.*)",
-			"/Users/vaati/Desktop/loghub/Zookeeper/Zookeeper_2k.log",
-			"/Users/vaati/Desktop/loghub/Zookeeper/Zookeeper.csv",
+			"/Users/vaati/Desktop/LogHub Datasets/Zookeeper/Zookeeper.log",
+			"/Users/vaati/Desktop/LogHub Datasets/Zookeeper/Zookeeper.csv",
 			"NO"
 		]
 	]
